@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~*": ["./*"]
+    },
+    "lib": ["ES2019"],
+    "esModuleInterop": true
+  }
+}
