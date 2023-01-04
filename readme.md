@@ -1,8 +1,8 @@
 # Notion-query-builder
 
-**Notion-query-builder** is an opinionated filter query builder for use with the [official Notion javascript client](https://github.com/makenotion/notion-sdk-js) written in Typescript.
+**Notion-query-builder** is an opinionated filter query builder written in Typescript for use with the [official Notion javascript client](https://github.com/makenotion/notion-sdk-js).
 
-Note: This software is not affliated with Notion Labs, Inc. Issues and/or support should relating to this library be directed to the project's [issue tracker]().
+Note: This software is not affliated with Notion Labs, Inc. Issues and/or support should relating to this library be directed to the project's [issue tracker](https://github.com/jimleuk/notion-query-builder/issues).
 
 ## Prerequisites
 ---

@@ -1,5 +1,6 @@
 toc:
-  - name: node-query-builder
+  - name: Getting Started
+    file: intro.md
   - name: Queries and Special Filters
     description: |
       Queries and special filters take other filters as arguments
