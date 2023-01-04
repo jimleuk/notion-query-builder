@@ -15,8 +15,8 @@
     "build": "pnpm build:clean && parcel build src/index.ts",
     "test": "jest src/**/*.test.ts",
     "docs": "documentation build src/**/*.ts --github -o docs -f html -c ./docs/documentation.yml",
-    "release-minor": "pnpm run build && np minor --contents dist",
-    "release-major": "pnpm run build && np major --contents dist"
+    "release-minor": "pnpm run build && np minor",
+    "release-major": "pnpm run build && np major"
   },
   "keywords": [
     "notion",
