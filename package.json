@@ -14,7 +14,9 @@
     "build:clean": "rimraf dist",
     "build": "pnpm build:clean && parcel build src/index.ts",
     "test": "jest src/**/*.test.ts",
-    "docs": "documentation build src/**/*.ts -o docs -f html"
+    "docs": "documentation build src/**/*.ts -o docs -f html",
+    "release-minor": "np minor --no-yarn --contents dist --no-publish",
+    "release-major": "np major --no-yarn --contents dist"
   },
   "keywords": [
     "notion",
