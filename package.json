@@ -1,6 +1,6 @@
 {
   "name": "notion-query-builder",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A simple and easy to write filter queries for the Notion API",
   "source": "src/index.ts",
   "main": "dist/main.js",
