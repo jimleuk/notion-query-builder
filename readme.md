@@ -24,7 +24,10 @@ npm i notion-query-builder
 
 ### Deno
 ```
-import nob from 'https://deno.land/x/notion-query-builder/mod.ts'
+import nob from 'https://deno.land/x/notion_query_builder/mod.ts'
+
+// note: for a smaller package size, try the npm version as it's stripped of development artifacts
+import nob from 'npm:notion-query-builder'
 ```
 
 ## Usage
@@ -81,11 +84,12 @@ const response = await notion.databases.query({
   ```
 </details>
 
-## API Quick Reference
+## API Reference
 ---
-This library's method namings aims to match closely with the official Notion API. As such, please also refer to the [official Notion API documentation](https://developers.notion.com/reference/post-database-query-filter).
+Full API documentation can be found: [https://jimleuk.github.io/notion-query-builder/](https://jimleuk.github.io/notion-query-builder/).
 
-Full documentation can be found [here](#todo).
+This library's method namings aims to match closely with the official Notion API. As such, please also refer to the [official Notion API documentation](https://developers.notion.com/reference/post-database-query-filter). For any inconsistencies, please raise a ticket in the project's [issue tracker](https://github.com/jimleuk/notion-query-builder/issues).
+
 
 ### Conditions
 These **conditions** take native data types as arguments.
@@ -138,7 +142,7 @@ These **queries** and **special filters** take **term level filters** as argumen
 |method|example|
 |-|-|
 |filterQuery|`nob.filterQuery(nob.textQuery('name', nob.eq('notion'))`|
-|rollupFilter|`nob.rollupFilter('every', nob.numberFilter('age', nob.gte(10)))`|
+|rollUpFilter|`nob.rollUpFilter('every', nob.numberFilter('age', nob.gte(10)))`|
 |formulaFilter|`nob.formulaFilter('number', nob.numberFilter('age', nob.gte(10))`|
 |compoundFilter|`nob.compoundFilter().and(nob.textFilter('name', nob.eq('notion'))).or(nob.numberFilter('age', nob.gte(10)))`|
 

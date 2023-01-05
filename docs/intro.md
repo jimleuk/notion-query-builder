@@ -22,7 +22,10 @@ npm i notion-query-builder
 
 ### Deno
 ```
-import nob from 'https://deno.land/x/notion-query-builder/mod.ts'
+import nob from 'https://deno.land/x/notion_query_builder/mod.ts'
+
+// note: for a smaller package size, try the npm version as it's stripped of development artifacts
+import nob from 'npm:notion-query-builder'
 ```
 
 ## Usage
