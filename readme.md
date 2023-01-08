@@ -23,11 +23,12 @@ npm i notion-query-builder
 
 ### Deno
 ```
-import nob from 'https://deno.land/x/notion_query_builder/mod.ts'
-
-// note: for a smaller package size, try the npm version as it's stripped of development artifacts
 import nob from 'npm:notion-query-builder'
 ```
+<details>
+<summary>Why no deno module?</summary>
+No Deno module for now unfortunately due to requiring the `.ts` extension for imports. This produced different/worst typedefs when compiled so given the choice, I've sided with the Typescript team on the matter and would rather not have to maintain an additional version just for deno.
+</details>
 
 ## Usage
 
