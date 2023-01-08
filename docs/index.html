@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset='utf-8'>
-  <title>notion-query-builder 0.3.0 | Documentation</title>
-  <meta name='description' content='A simple and easy to write filter queries for the Notion API'>
+  <title>notion-query-builder 0.4.0 | Documentation</title>
+  <meta name='description' content='A simple and easy way to write filter queries for the Notion API'>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
   <link href='assets/style.css' rel='stylesheet'>
@@ -15,7 +15,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>notion-query-builder</h3>
-          <div class='mb1'><code>0.3.0</code></div>
+          <div class='mb1'><code>0.4.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -1336,10 +1336,10 @@
   </h2>
 
   
-    <p><strong>Notion-query-builder</strong> is an opinionated filter query builder written in Typescript for use with the <a href="https://github.com/makenotion/notion-sdk-js">official Notion javascript client</a>.</p>
+    <h1>Notion-query-builder</h1>
+<p><strong>Notion-query-builder</strong> is an opinionated filter query builder written in Typescript for use with the <a href="https://github.com/makenotion/notion-sdk-js">official Notion javascript client</a>.</p>
 <p>Note: This software is not affliated with Notion Labs, Inc. Issues and/or support should relating to this library be directed to the project's <a href="https://github.com/jimleuk/notion-query-builder/issues">issue tracker</a>.</p>
 <h2>Prerequisites</h2>
-<hr>
 <table>
 <thead>
 <tr>
@@ -1363,7 +1363,6 @@
 </tbody>
 </table>
 <h2>Installation</h2>
-<hr>
 <h3>NodeJS</h3>
 <pre><code>npm i notion-query-builder
 
@@ -1376,14 +1375,14 @@
 import nob from 'npm:notion-query-builder'
 </code></pre>
 <h2>Usage</h2>
-<hr>
-<p>This library serves as a utility to write compact yet manageable queries for the Notion API - it is not a replacement for the client. It does this by doing the following:</p>
+<p>As your filter queries become more complex, so does the size of the JSON you'll write for them. Large unwieldy blocks of JSON are always a hassle to reason about and maintain - often, solutions to manage this data utimately leads to code bloat.</p>
+<p><code>node-query-builder</code> offers a simple and easy-to-use API to write <strong>filters</strong> and <strong>conditions</strong> programatically, reducing the effort and amount of code required by many factors.</p>
+<p>To get started, here's a high level overview of the library:</p>
 <ul>
-<li><strong>You do not write JSON directly</strong>. This avoids large JSON objects clogging up your code, needing to remember structure and repetitive work.</li>
-<li>You instead use 3 components - <strong>builders, queries and conditions</strong> - to construct your query and only provide the values.</li>
-<li>You can use the components separately or mix with raw JSON if you prefer.</li>
+<li>filters and conditions are functions which combine to construct a query.</li>
+<li>Usually, filters take conditions as arguments but special filters may take other filters as arguments</li>
+<li>To use with the client, the constructed query needs to return its JSON output. This is usually done by calling the <code>toJSON()</code> method.</li>
 </ul>
-<p>Once you have your query built, you execute the builder to output the JSON which defines your filter. This JSON is then used with the official client.</p>
 <pre><code>import { Client } from '@notionhq/client';
 import nob from 'notion-query-builder';
 
@@ -1399,14 +1398,34 @@ const response = await notion.databases.query({
   filter: myFilter.toJson()
 });
 </code></pre>
+<pre><code>{
+  "and": [
+    {
+      "property": "Published",
+      "checkbox": {
+        "equals": true
+      }
+    },
+    {
+      "property": "Tags",
+      "multi_select": {
+        "contains": "A"
+      }
+    },
+    {
+      "property": "Tags",
+      "multi_select": {
+        "contains": "B"
+      }
+    }
+  ]
+}
+</code></pre>
 <h2>Credits</h2>
-<hr>
 <p><code>notion-query-builder</code> is inspired by <a href="https://github.com/sudo-suhas/elastic-builder">elastic-builder</a> and the countless hours it has saved writing ElasticSearch queries.</p>
 <h2>Licence</h2>
-<hr>
 <p>MIT</p>
 <h2>Donate</h2>
-<hr>
 <p>A random charity appears!</p>
 <p><strong><a href="https://www.youngwomenstrust.org/donate/">Young Women's Trust</a></strong></p>
 <p>Young Women’s Trust offers support to young women aged 18 to 30, who are living on low or no pay and want to build a better future, through Work It Out. Work It Out is a free service that offers coaching and personalised feedback on CV and job applications.</p>
@@ -1442,7 +1461,7 @@ const response = await notion.databases.query({
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/query/filter.ts#L96-L124'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/query/filter.ts#L96-L124'>
       <span>src/query/filter.ts</span>
       </a>
     
@@ -1531,7 +1550,7 @@ if these aren't present as properties on the database.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/query/filter.ts#L121-L123'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/query/filter.ts#L121-L123'>
       <span>src/query/filter.ts</span>
       </a>
     
@@ -1603,7 +1622,7 @@ if these aren't present as properties on the database.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/compound.ts#L88-L164'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/compound.ts#L88-L164'>
       <span>src/filter/compound.ts</span>
       </a>
     
@@ -1672,7 +1691,7 @@ A compound filter can even be combined within a compound filter, but only up to 
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/compound.ts#L108-L113'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/compound.ts#L108-L113'>
       <span>src/filter/compound.ts</span>
       </a>
     
@@ -1751,7 +1770,7 @@ A compound filter can even be combined within a compound filter, but only up to 
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/compound.ts#L121-L126'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/compound.ts#L121-L126'>
       <span>src/filter/compound.ts</span>
       </a>
     
@@ -1830,7 +1849,7 @@ A compound filter can even be combined within a compound filter, but only up to 
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/compound.ts#L131-L163'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/compound.ts#L131-L163'>
       <span>src/filter/compound.ts</span>
       </a>
     
@@ -1902,7 +1921,7 @@ A compound filter can even be combined within a compound filter, but only up to 
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/rollUp.ts#L64-L95'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/rollUp.ts#L64-L95'>
       <span>src/filter/rollUp.ts</span>
       </a>
     
@@ -1994,7 +2013,7 @@ which evaluate to dates accept a filter with a date condition.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/rollUp.ts#L92-L94'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/rollUp.ts#L92-L94'>
       <span>src/filter/rollUp.ts</span>
       </a>
     
@@ -2064,7 +2083,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/formula.ts#L62-L87'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/formula.ts#L62-L87'>
       <span>src/filter/formula.ts</span>
       </a>
     
@@ -2153,7 +2172,7 @@ which evaluate to dates accept a filter with a date condition.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/formula.ts#L84-L86'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/formula.ts#L84-L86'>
       <span>src/filter/formula.ts</span>
       </a>
     
@@ -2237,7 +2256,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/text.ts#L65-L79'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/text.ts#L65-L79'>
       <span>src/filter/text.ts</span>
       </a>
     
@@ -2338,7 +2357,7 @@ which evaluate to dates accept a filter with a date condition.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/text.ts#L76-L78'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/text.ts#L76-L78'>
       <span>src/filter/text.ts</span>
       </a>
     
@@ -2408,7 +2427,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/number.ts#L52-L65'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/number.ts#L52-L65'>
       <span>src/filter/number.ts</span>
       </a>
     
@@ -2497,7 +2516,7 @@ which evaluate to dates accept a filter with a date condition.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/number.ts#L62-L64'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/number.ts#L62-L64'>
       <span>src/filter/number.ts</span>
       </a>
     
@@ -2567,7 +2586,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/checkbox.ts#L39-L52'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/checkbox.ts#L39-L52'>
       <span>src/filter/checkbox.ts</span>
       </a>
     
@@ -2655,7 +2674,7 @@ which evaluate to dates accept a filter with a date condition.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/checkbox.ts#L49-L51'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/checkbox.ts#L49-L51'>
       <span>src/filter/checkbox.ts</span>
       </a>
     
@@ -2725,7 +2744,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/select.ts#L43-L56'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/select.ts#L43-L56'>
       <span>src/filter/select.ts</span>
       </a>
     
@@ -2813,7 +2832,7 @@ which evaluate to dates accept a filter with a date condition.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/select.ts#L53-L55'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/select.ts#L53-L55'>
       <span>src/filter/select.ts</span>
       </a>
     
@@ -2883,7 +2902,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/multiSelect.ts#L44-L58'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/multiSelect.ts#L44-L58'>
       <span>src/filter/multiSelect.ts</span>
       </a>
     
@@ -2972,7 +2991,7 @@ which evaluate to dates accept a filter with a date condition.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/multiselect.ts#L55-L57'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/multiselect.ts#L55-L57'>
       <span>src/filter/multiselect.ts</span>
       </a>
     
@@ -3034,7 +3053,7 @@ which evaluate to dates accept a filter with a date condition.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/multiSelect.ts#L55-L57'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/multiSelect.ts#L55-L57'>
       <span>src/filter/multiSelect.ts</span>
       </a>
     
@@ -3104,7 +3123,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/multiselect.ts#L44-L58'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/multiselect.ts#L44-L58'>
       <span>src/filter/multiselect.ts</span>
       </a>
     
@@ -3193,7 +3212,7 @@ which evaluate to dates accept a filter with a date condition.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/multiselect.ts#L55-L57'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/multiselect.ts#L55-L57'>
       <span>src/filter/multiselect.ts</span>
       </a>
     
@@ -3255,7 +3274,7 @@ which evaluate to dates accept a filter with a date condition.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/multiSelect.ts#L55-L57'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/multiSelect.ts#L55-L57'>
       <span>src/filter/multiSelect.ts</span>
       </a>
     
@@ -3325,7 +3344,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/status.ts#L43-L56'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/status.ts#L43-L56'>
       <span>src/filter/status.ts</span>
       </a>
     
@@ -3413,7 +3432,7 @@ which evaluate to dates accept a filter with a date condition.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/status.ts#L53-L55'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/status.ts#L53-L55'>
       <span>src/filter/status.ts</span>
       </a>
     
@@ -3483,7 +3502,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/date.ts#L78-L98'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/date.ts#L78-L98'>
       <span>src/filter/date.ts</span>
       </a>
     
@@ -3583,7 +3602,7 @@ which evaluate to dates accept a filter with a date condition.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/date.ts#L95-L97'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/date.ts#L95-L97'>
       <span>src/filter/date.ts</span>
       </a>
     
@@ -3653,7 +3672,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/people.ts#L53-L67'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/people.ts#L53-L67'>
       <span>src/filter/people.ts</span>
       </a>
     
@@ -3752,7 +3771,7 @@ which evaluate to dates accept a filter with a date condition.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/people.ts#L64-L66'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/people.ts#L64-L66'>
       <span>src/filter/people.ts</span>
       </a>
     
@@ -3822,7 +3841,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/files.ts#L39-L52'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/files.ts#L39-L52'>
       <span>src/filter/files.ts</span>
       </a>
     
@@ -3910,7 +3929,7 @@ which evaluate to dates accept a filter with a date condition.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/files.ts#L49-L51'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/files.ts#L49-L51'>
       <span>src/filter/files.ts</span>
       </a>
     
@@ -3980,7 +3999,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/relation.ts#L43-L56'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/relation.ts#L43-L56'>
       <span>src/filter/relation.ts</span>
       </a>
     
@@ -4068,7 +4087,7 @@ which evaluate to dates accept a filter with a date condition.</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/relation.ts#L53-L55'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/relation.ts#L53-L55'>
       <span>src/filter/relation.ts</span>
       </a>
     
@@ -4152,7 +4171,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/equal.ts#L22-L26'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/equal.ts#L22-L26'>
       <span>src/condition/equal.ts</span>
       </a>
     
@@ -4242,7 +4261,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/notEqual.ts#L22-L26'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/notEqual.ts#L22-L26'>
       <span>src/condition/notEqual.ts</span>
       </a>
     
@@ -4332,7 +4351,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/empty.ts#L15-L19'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/empty.ts#L15-L19'>
       <span>src/condition/empty.ts</span>
       </a>
     
@@ -4403,7 +4422,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/notEmpty.ts#L15-L19'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/notEmpty.ts#L15-L19'>
       <span>src/condition/notEmpty.ts</span>
       </a>
     
@@ -4474,7 +4493,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/contain.ts#L20-L24'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/contain.ts#L20-L24'>
       <span>src/condition/contain.ts</span>
       </a>
     
@@ -4562,7 +4581,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/notContain.ts#L21-L25'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/notContain.ts#L21-L25'>
       <span>src/condition/notContain.ts</span>
       </a>
     
@@ -4651,7 +4670,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/startsWith.ts#L14-L18'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/startsWith.ts#L14-L18'>
       <span>src/condition/startsWith.ts</span>
       </a>
     
@@ -4733,7 +4752,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/endsWith.ts#L14-L18'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/endsWith.ts#L14-L18'>
       <span>src/condition/endsWith.ts</span>
       </a>
     
@@ -4815,7 +4834,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/greaterThan.ts#L17-L21'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/greaterThan.ts#L17-L21'>
       <span>src/condition/greaterThan.ts</span>
       </a>
     
@@ -4900,7 +4919,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/greaterThanOrEqualTo.ts#L17-L21'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/greaterThanOrEqualTo.ts#L17-L21'>
       <span>src/condition/greaterThanOrEqualTo.ts</span>
       </a>
     
@@ -4985,7 +5004,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/lessThan.ts#L16-L20'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/lessThan.ts#L16-L20'>
       <span>src/condition/lessThan.ts</span>
       </a>
     
@@ -5069,7 +5088,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/lessThanOrEqualTo.ts#L16-L20'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/lessThanOrEqualTo.ts#L16-L20'>
       <span>src/condition/lessThanOrEqualTo.ts</span>
       </a>
     
@@ -5153,7 +5172,7 @@ which evaluate to dates accept a filter with a date condition.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/before.ts#L16-L20'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/before.ts#L16-L20'>
       <span>src/condition/before.ts</span>
       </a>
     
@@ -5237,7 +5256,7 @@ Note that if no timezone is provided, the default is UTC.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/onOrBefore.ts#L16-L20'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/onOrBefore.ts#L16-L20'>
       <span>src/condition/onOrBefore.ts</span>
       </a>
     
@@ -5321,7 +5340,7 @@ Note that if no timezone is provided, the default is UTC.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/onOrbefore.ts#L16-L20'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/onOrbefore.ts#L16-L20'>
       <span>src/condition/onOrbefore.ts</span>
       </a>
     
@@ -5405,7 +5424,7 @@ Note that if no timezone is provided, the default is UTC.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/after.ts#L16-L20'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/after.ts#L16-L20'>
       <span>src/condition/after.ts</span>
       </a>
     
@@ -5489,7 +5508,7 @@ Note that if no timezone is provided, the default is UTC.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/onOrAfter.ts#L16-L20'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/onOrAfter.ts#L16-L20'>
       <span>src/condition/onOrAfter.ts</span>
       </a>
     
@@ -5573,7 +5592,7 @@ Note that if no timezone is provided, the default is UTC.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/onOrafter.ts#L16-L20'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/onOrafter.ts#L16-L20'>
       <span>src/condition/onOrafter.ts</span>
       </a>
     
@@ -5657,7 +5676,7 @@ Note that if no timezone is provided, the default is UTC.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/pastWeek.ts#L11-L15'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/pastWeek.ts#L11-L15'>
       <span>src/condition/pastWeek.ts</span>
       </a>
     
@@ -5724,7 +5743,7 @@ Note that if no timezone is provided, the default is UTC.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/pastMonth.ts#L11-L15'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/pastMonth.ts#L11-L15'>
       <span>src/condition/pastMonth.ts</span>
       </a>
     
@@ -5791,7 +5810,7 @@ Note that if no timezone is provided, the default is UTC.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/pastYear.ts#L11-L15'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/pastYear.ts#L11-L15'>
       <span>src/condition/pastYear.ts</span>
       </a>
     
@@ -5858,7 +5877,7 @@ Note that if no timezone is provided, the default is UTC.</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/thisWeek.ts#L12-L16'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/thisWeek.ts#L12-L16'>
       <span>src/condition/thisWeek.ts</span>
       </a>
     
@@ -5926,7 +5945,7 @@ The current week starts on the most recent Sunday and ends on the upcoming Satur
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/nextWeek.ts#L11-L15'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/nextWeek.ts#L11-L15'>
       <span>src/condition/nextWeek.ts</span>
       </a>
     
@@ -5993,7 +6012,7 @@ The current week starts on the most recent Sunday and ends on the upcoming Satur
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/nextMonth.ts#L11-L15'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/nextMonth.ts#L11-L15'>
       <span>src/condition/nextMonth.ts</span>
       </a>
     
@@ -6060,7 +6079,7 @@ The current week starts on the most recent Sunday and ends on the upcoming Satur
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/nextYear.ts#L11-L15'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/nextYear.ts#L11-L15'>
       <span>src/condition/nextYear.ts</span>
       </a>
     
@@ -6141,7 +6160,7 @@ The current week starts on the most recent Sunday and ends on the upcoming Satur
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/sort/sort.ts#L20-L41'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/sort/sort.ts#L20-L41'>
       <span>src/sort/sort.ts</span>
       </a>
     
@@ -6228,7 +6247,7 @@ and in ascending (i.e. direction).</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/sort/sort.ts#L35-L40'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/sort/sort.ts#L35-L40'>
       <span>src/sort/sort.ts</span>
       </a>
     
@@ -6313,7 +6332,7 @@ and in ascending (i.e. direction).</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/filter.ts#L24-L100'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/filter.ts#L24-L100'>
       <span>src/filter/filter.ts</span>
       </a>
     
@@ -6413,7 +6432,7 @@ and in ascending (i.e. direction).</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/filter.ts#L58-L60'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/filter.ts#L58-L60'>
       <span>src/filter/filter.ts</span>
       </a>
     
@@ -6506,7 +6525,7 @@ returning the toJson() object</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/filter.ts#L66-L68'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/filter.ts#L66-L68'>
       <span>src/filter/filter.ts</span>
       </a>
     
@@ -6571,7 +6590,7 @@ returning the toJson() object</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/filter.ts#L74-L76'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/filter.ts#L74-L76'>
       <span>src/filter/filter.ts</span>
       </a>
     
@@ -6636,7 +6655,7 @@ returning the toJson() object</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/filter.ts#L82-L84'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/filter.ts#L82-L84'>
       <span>src/filter/filter.ts</span>
       </a>
     
@@ -6701,7 +6720,7 @@ returning the toJson() object</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/filter.ts#L91-L99'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/filter.ts#L91-L99'>
       <span>src/filter/filter.ts</span>
       </a>
     
@@ -6775,7 +6794,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/types.ts#L9-L24'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/types.ts#L9-L24'>
       <span>src/filter/types.ts</span>
       </a>
     
@@ -6850,7 +6869,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/text.ts#L14-L16'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/text.ts#L14-L16'>
       <span>src/filter/text.ts</span>
       </a>
     
@@ -6909,7 +6928,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/text.ts#L27-L29'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/text.ts#L27-L29'>
       <span>src/filter/text.ts</span>
       </a>
     
@@ -6968,7 +6987,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/text.ts#L40-L42'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/text.ts#L40-L42'>
       <span>src/filter/text.ts</span>
       </a>
     
@@ -7027,7 +7046,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/number.ts#L14-L16'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/number.ts#L14-L16'>
       <span>src/filter/number.ts</span>
       </a>
     
@@ -7086,7 +7105,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/number.ts#L31-L33'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/number.ts#L31-L33'>
       <span>src/filter/number.ts</span>
       </a>
     
@@ -7145,7 +7164,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/checkbox.ts#L8-L10'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/checkbox.ts#L8-L10'>
       <span>src/filter/checkbox.ts</span>
       </a>
     
@@ -7204,7 +7223,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/checkbox.ts#L19-L21'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/checkbox.ts#L19-L21'>
       <span>src/filter/checkbox.ts</span>
       </a>
     
@@ -7263,7 +7282,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/select.ts#L10-L12'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/select.ts#L10-L12'>
       <span>src/filter/select.ts</span>
       </a>
     
@@ -7322,7 +7341,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/select.ts#L23-L25'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/select.ts#L23-L25'>
       <span>src/filter/select.ts</span>
       </a>
     
@@ -7381,7 +7400,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/multiSelect.ts#L10-L12'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/multiSelect.ts#L10-L12'>
       <span>src/filter/multiSelect.ts</span>
       </a>
     
@@ -7440,7 +7459,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/multiselect.ts#L10-L12'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/multiselect.ts#L10-L12'>
       <span>src/filter/multiselect.ts</span>
       </a>
     
@@ -7499,7 +7518,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/multiSelect.ts#L23-L25'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/multiSelect.ts#L23-L25'>
       <span>src/filter/multiSelect.ts</span>
       </a>
     
@@ -7558,7 +7577,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/multiselect.ts#L23-L25'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/multiselect.ts#L23-L25'>
       <span>src/filter/multiselect.ts</span>
       </a>
     
@@ -7617,7 +7636,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/status.ts#L10-L12'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/status.ts#L10-L12'>
       <span>src/filter/status.ts</span>
       </a>
     
@@ -7676,7 +7695,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/status.ts#L23-L25'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/status.ts#L23-L25'>
       <span>src/filter/status.ts</span>
       </a>
     
@@ -7735,7 +7754,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/date.ts#L20-L23'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/date.ts#L20-L23'>
       <span>src/filter/date.ts</span>
       </a>
     
@@ -7794,7 +7813,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/date.ts#L46-L51'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/date.ts#L46-L51'>
       <span>src/filter/date.ts</span>
       </a>
     
@@ -7859,7 +7878,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/date.ts#L54-L56'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/date.ts#L54-L56'>
       <span>src/filter/date.ts</span>
       </a>
     
@@ -7918,7 +7937,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/people.ts#L10-L12'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/people.ts#L10-L12'>
       <span>src/filter/people.ts</span>
       </a>
     
@@ -7977,7 +7996,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/people.ts#L15-L17'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/people.ts#L15-L17'>
       <span>src/filter/people.ts</span>
       </a>
     
@@ -8036,7 +8055,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/people.ts#L30-L32'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/people.ts#L30-L32'>
       <span>src/filter/people.ts</span>
       </a>
     
@@ -8095,7 +8114,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/files.ts#L8-L10'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/files.ts#L8-L10'>
       <span>src/filter/files.ts</span>
       </a>
     
@@ -8154,7 +8173,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/files.ts#L19-L21'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/files.ts#L19-L21'>
       <span>src/filter/files.ts</span>
       </a>
     
@@ -8213,7 +8232,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/relation.ts#L10-L12'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/relation.ts#L10-L12'>
       <span>src/filter/relation.ts</span>
       </a>
     
@@ -8272,7 +8291,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/relation.ts#L23-L25'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/relation.ts#L23-L25'>
       <span>src/filter/relation.ts</span>
       </a>
     
@@ -8331,7 +8350,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/rollUp.ts#L7-L9'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/rollUp.ts#L7-L9'>
       <span>src/filter/rollUp.ts</span>
       </a>
     
@@ -8390,7 +8409,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/rollUp.ts#L12-L14'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/rollUp.ts#L12-L14'>
       <span>src/filter/rollUp.ts</span>
       </a>
     
@@ -8449,7 +8468,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/rollUp.ts#L38-L40'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/rollUp.ts#L38-L40'>
       <span>src/filter/rollUp.ts</span>
       </a>
     
@@ -8508,7 +8527,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/formula.ts#L8-L10'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/formula.ts#L8-L10'>
       <span>src/filter/formula.ts</span>
       </a>
     
@@ -8567,7 +8586,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/formula.ts#L13-L15'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/formula.ts#L13-L15'>
       <span>src/filter/formula.ts</span>
       </a>
     
@@ -8626,7 +8645,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/formula.ts#L40-L42'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/formula.ts#L40-L42'>
       <span>src/filter/formula.ts</span>
       </a>
     
@@ -8685,7 +8704,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/compound.ts#L15-L17'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/compound.ts#L15-L17'>
       <span>src/filter/compound.ts</span>
       </a>
     
@@ -8744,7 +8763,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/compound.ts#L32-L34'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/compound.ts#L32-L34'>
       <span>src/filter/compound.ts</span>
       </a>
     
@@ -8803,7 +8822,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/compound.ts#L39-L41'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/compound.ts#L39-L41'>
       <span>src/filter/compound.ts</span>
       </a>
     
@@ -8862,7 +8881,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/compound.ts#L56-L58'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/compound.ts#L56-L58'>
       <span>src/filter/compound.ts</span>
       </a>
     
@@ -8921,7 +8940,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/filter/compound.ts#L63-L65'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/filter/compound.ts#L63-L65'>
       <span>src/filter/compound.ts</span>
       </a>
     
@@ -8997,7 +9016,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/query/filter.ts#L30-L32'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/query/filter.ts#L30-L32'>
       <span>src/query/filter.ts</span>
       </a>
     
@@ -9056,7 +9075,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/query/filter.ts#L48-L50'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/query/filter.ts#L48-L50'>
       <span>src/query/filter.ts</span>
       </a>
     
@@ -9115,7 +9134,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/condition.ts#L7-L28'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/condition.ts#L7-L28'>
       <span>src/condition/condition.ts</span>
       </a>
     
@@ -9190,7 +9209,7 @@ returning the toJson() object</p>
   <div class='clearfix'>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/condition/condition.ts#L24-L27'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/condition/condition.ts#L24-L27'>
       <span>src/condition/condition.ts</span>
       </a>
     
@@ -9264,7 +9283,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/sort/types.ts#L3-L5'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/sort/types.ts#L3-L5'>
       <span>src/sort/types.ts</span>
       </a>
     
@@ -9333,7 +9352,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/sort/types.ts#L10-L12'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/sort/types.ts#L10-L12'>
       <span>src/sort/types.ts</span>
       </a>
     
@@ -9391,7 +9410,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/sort/types.ts#L17-L19'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/sort/types.ts#L17-L19'>
       <span>src/sort/types.ts</span>
       </a>
     
@@ -9449,7 +9468,7 @@ returning the toJson() object</p>
     </h3>
     
     
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/e21b31f0c645168d035b81ab883cccc4f8fa7a73/src/sort/types.ts#L22-L24'>
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/jimleuk/notion-query-builder/blob/de6f7af065ed7d59c2a101ef0b4c4da3211274fc/src/sort/types.ts#L22-L24'>
       <span>src/sort/types.ts</span>
       </a>
     

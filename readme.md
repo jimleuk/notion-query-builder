@@ -5,7 +5,7 @@
 Note: This software is not affliated with Notion Labs, Inc. Issues and/or support should relating to this library be directed to the project's [issue tracker](https://github.com/jimleuk/notion-query-builder/issues).
 
 ## Prerequisites
----
+
 |Compatibility|Version Id|
 |-|-|
 |Notion API|2022-06-28|
@@ -14,7 +14,6 @@ Note: This software is not affliated with Notion Labs, Inc. Issues and/or suppor
 
 ## Installation
 
----
 ### NodeJS
 ```
 npm i notion-query-builder
@@ -31,13 +30,15 @@ import nob from 'npm:notion-query-builder'
 ```
 
 ## Usage
----
-This library serves as a utility to write compact yet manageable queries for the Notion API - it is not a replacement for the client. It does this by doing the following:
-* **You do not write JSON directly**. This avoids large JSON objects clogging up your code, needing to remember structure and repetitive work.
-* You instead use 3 components - **builders, queries and conditions** - to construct your query and only provide the values.
-* You can use the components separately or mix with raw JSON if you prefer.
 
-Once you have your query built, you execute the builder to output the JSON which defines your filter. This JSON is then used with the official client.
+As your filter queries become more complex, so does the size of the JSON you'll write for them. Large unwieldy blocks of JSON are always a hassle to reason about and maintain - often, solutions to manage this data utimately leads to code bloat.
+
+`node-query-builder` offers a simple and easy-to-use API to write **filters** and **conditions** programatically, reducing the effort and amount of code required by many factors.
+
+To get started, here's a high level overview of the library:
+* filters and conditions are functions which combine to construct a query.
+* Usually, filters take conditions as arguments but special filters may take other filters as arguments
+* To use with the client, the constructed query needs to return its JSON output. This is usually done by calling the `toJSON()` method.
 
 ```
 import { Client } from '@notionhq/client';
@@ -85,10 +86,10 @@ const response = await notion.databases.query({
 </details>
 
 ## API Reference
----
-Full API documentation can be found: [https://jimleuk.github.io/notion-query-builder/](https://jimleuk.github.io/notion-query-builder/).
 
-This library's method namings aims to match closely with the official Notion API. As such, please also refer to the [official Notion API documentation](https://developers.notion.com/reference/post-database-query-filter). For any inconsistencies, please raise a ticket in the project's [issue tracker](https://github.com/jimleuk/notion-query-builder/issues).
+Full API documentation and examples can be found at [https://jimleuk.github.io/notion-query-builder/](https://jimleuk.github.io/notion-query-builder/).
+
+This library aims to match closely with the official Notion API. As such, please also refer to the [official Notion API documentation](https://developers.notion.com/reference/post-database-query-filter). For any inconsistencies, please raise a ticket in the project's [issue tracker](https://github.com/jimleuk/notion-query-builder/issues).
 
 
 ### Conditions
@@ -136,7 +137,7 @@ These **filters** take **conditions** as arguments.
 |filesFilter|`nob.filesFilter('name', nob.eq('notion'))`|
 |relationFilter|`nob.relationFilter('name', nob.eq('notion'))`|
 
-### Queries and Sepcial Filters
+### Queries and Special Filters
 These **queries** and **special filters** take **term level filters** as arguments.
 
 |method|example|
@@ -147,30 +148,27 @@ These **queries** and **special filters** take **term level filters** as argumen
 |compoundFilter|`nob.compoundFilter().and(nob.textFilter('name', nob.eq('notion'))).or(nob.numberFilter('age', nob.gte(10)))`|
 
 ### Sort
-Only one function but will switch between `propertySort` and `TimestampSort` depending on the field given. Direction is optional and defaults to `descending`.
+The `Sort()` function will switch between `propertySort` and `TimestampSort` depending on the field given. Sort Direction is optional and defaults to `descending`.
 
 |methods|examples|
 |-|-|
 |sort|`nob.sort('age')`, `nob.sort('age', 'ascending)`, `nob.sort('created_time', 'ascending)`|
 
 ## Tests
----
 
-Run unit tests
+Run unit tests.
 ```
 npm test
 ```
 
 ## Credits
----
+
 `notion-query-builder` is inspired by [elastic-builder](https://github.com/sudo-suhas/elastic-builder) and the countless hours it has saved writing ElasticSearch queries.
 
 ## Licence
----
 MIT
 
 ## Donate
----
 A random charity appears!
 
 **[Young Women's Trust](https://www.youngwomenstrust.org/donate/)**
