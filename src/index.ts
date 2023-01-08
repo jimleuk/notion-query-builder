@@ -204,8 +204,8 @@ import {
   SortTime,
 } from './sort';
 
-export function sort(property: 'created_time' | 'last_edited_time', direction: SortDirection): Sort<SortTime>;
-export function sort(property: string, direction: SortDirection): Sort<SortProperty>;
-export function sort(property: string, direction: SortDirection) {
+export function sort(property: 'created_time' | 'last_edited_time', direction?: SortDirection): Sort<SortTime>;
+export function sort(property: string, direction?: SortDirection): Sort<SortProperty>;
+export function sort(property: string, direction?: SortDirection) {
   return new Sort(property, direction);
 }
